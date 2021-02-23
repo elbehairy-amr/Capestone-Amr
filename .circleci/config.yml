@@ -15,6 +15,7 @@ jobs:
           name : Install 
           command: | 
             cd ./js-package
+            npm run test
             npm install
         
           
