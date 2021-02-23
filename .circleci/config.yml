@@ -11,14 +11,17 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout 
+      - restore_cache:
+        keys: [node_modules]
       - run: 
           name : Install 
           command: | 
             cd ./js-package
             npm run test
             npm install
-       - save_cache:
-          paths: [js-package/node_modules]     
+      - save_cache:
+          paths: [js-package/node_modules]
+          key: node_modules     
         
           
 workflows:
