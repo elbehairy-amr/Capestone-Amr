@@ -6,13 +6,13 @@ orbs:
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
 jobs: 
-  Test:
+  Install npm :
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout 
       - run: 
-          name : Install 
+          name : Install npm
           command: | 
             cd ./js-package
             npm run test
