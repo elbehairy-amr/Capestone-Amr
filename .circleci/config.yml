@@ -17,6 +17,8 @@ jobs:
             cd ./js-package
             npm run test
             npm install
+       - save_cache:
+          paths: [js-package/node_modules]     
         
           
 workflows:
