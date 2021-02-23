@@ -10,10 +10,10 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run:
-          name: Install 
-          command: |
-             ehco hello-7amda
+      - run: ehco hello-7amda
+          
+          
+            
 
             
             
