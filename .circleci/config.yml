@@ -5,8 +5,9 @@ orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
+
 jobs: 
-  Install npm :
+  Install npm Test :
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -19,14 +20,27 @@ jobs:
             npm install
       - save_cache:
           paths: [js-package/node_modules]
-          key: node_modules     
-     
-        
-          
+          key: node_modules
+  Lint Intsall and Test :
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - run:
+          name : install hado Lint 
+          command: | 
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolint
+  
+      - run:
+          name : Hadolint 
+          command: hadolint Dockerfile
+               
 workflows:
   welcome:
     jobs:
-      - Test
+      - Install npm Test
+      - Lint Intsall and Test
       
                 
             
