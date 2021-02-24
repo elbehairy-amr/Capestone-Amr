@@ -8,7 +8,7 @@ RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
  && apt-get install -y nodejs && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # App
-ADD . /web
+copy . /web
 WORKDIR /web
 # Install app dependencies
 RUN npm install
