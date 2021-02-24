@@ -34,7 +34,7 @@ jobs:
   
       - run:
           name : Hadolint 
-          command: hadolint Dockerfile
+          command: hadolint --ignore  DL3008 Dockerfile
                
 workflows:
   welcome:
