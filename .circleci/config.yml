@@ -7,7 +7,7 @@ orbs:
 # Orchestrate or schedule a set of jobs
 
 jobs: 
-  Install npm Test :
+  Install:
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -21,7 +21,7 @@ jobs:
       - save_cache:
           paths: [js-package/node_modules]
           key: node_modules
-  Lint Intsall and Test :
+  Lint:
     docker:
       - image: python:3.7.3-stretch
     steps:
@@ -56,12 +56,13 @@ jobs:
           
                
 workflows:
-  welcome:
+  default:
     jobs:
-      - Install npm Test
-      - Lint Intsall and Test
-      - DeployInfra-VPC
-      
+      - Install
+      - Lint:
+          requires: [Install]
+      - DeployInfra-VPC:
+          requires: [Lint]    
       
                 
             
