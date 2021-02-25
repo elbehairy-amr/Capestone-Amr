@@ -46,7 +46,8 @@ jobs:
       - checkout
       - run:
           name: VPC Deploy
-          command: |         
+          command: |   
+            pwd    
             aws cloudformation create-stack --stack-name vpc-capstone \
               --template-body file://project/AWS-cloudformation/Network.yml \
               --parameters file://project/AWS-cloudformation/Network-Prameters 
