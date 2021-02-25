@@ -47,11 +47,9 @@ jobs:
       - run:
           name: VPC Deploy
           command: |         
-            aws cloudformation create-stack \
-              --stack-name vpc-capstone \
-              --template-body ./AWS-cloudformation/Network.yml \
-              --parameters ./AWS-cloudformation/Network-Prameters \
-              --tags project=Capstone-vpc
+            aws cloudformation create-stack --stack-name vpc-capstone \
+              --template-body file://project/AWS-cloudformation/Network.yml \
+              --parameters file://project/AWS-cloudformation/Network-Prameters 
       
           
           
