@@ -50,7 +50,9 @@ jobs:
             pwd    
             aws cloudformation create-stack --stack-name vpc-capstone \
               --template-body file://./AWS-cloudformation/Network.yml \
-              --parameters file://./AWS-cloudformation/Network-Prameters 
+              --parameters file://./AWS-cloudformation/Network-Prameters \
+              | grep -i StackId >> file.stdout && var=$(awk '{print $2} file.stdout)
+            aws cloudformation wait stack-exists --stack-name $var
                
                 
                  
