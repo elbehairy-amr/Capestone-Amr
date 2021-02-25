@@ -49,7 +49,7 @@ jobs:
           command: |         
             aws cloudformation create-stack \
               --stack-name vpc-capstone \
-              --template-file ./AWS-cloudformation/Network.yml \
+              --template-body ./AWS-cloudformation/Network.yml \
               --parameters ./AWS-cloudformation/Network-Prameters \
               --tags project=Capstone-vpc
       
