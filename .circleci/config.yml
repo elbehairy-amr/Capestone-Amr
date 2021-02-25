@@ -35,7 +35,7 @@ jobs:
       - run:
           name : Hadolint 
           command: |
-            hadolint --ignore  DL3008 Dockerfile  && hadolint --ignore DL3016  Dockerfile
+            hadolint Dockerfile --ignore DL3008 --ignore DL3016
            
   
 
