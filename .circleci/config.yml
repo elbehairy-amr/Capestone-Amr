@@ -46,7 +46,7 @@ jobs:
       - checkout
       - run:
           name: VPC Deploy
-          command:         
+          command: |         
             aws cloudformation deploy \
               --stack-name vpc-capstone \
               --template-file ./AWS-cloudformation/Network.yml \
