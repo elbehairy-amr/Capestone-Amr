@@ -35,12 +35,32 @@ jobs:
       - run:
           name : Hadolint 
           command: hadolint --ignore  DL3008 Dockerfile
+  
+
+  DeployInfra-VPC:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: VPC Deploy
+          command:         
+            aws cloudformation deploy \
+              --stack-name vpc-capstone
+              --template-file ./AWS-cloudformation/Network-Prameters
+              --parameters ./Network-Prameters \
+              --tags project=Capstone-vpc
+      
+          
+          
                
 workflows:
   welcome:
     jobs:
       - Install npm Test
       - Lint Intsall and Test
+      - DeployInfra-VPC
+      
       
                 
             

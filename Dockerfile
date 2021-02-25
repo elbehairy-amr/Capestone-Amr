@@ -13,7 +13,7 @@ COPY . /web
 WORKDIR /web
 
 # Install app dependencies
-RUN npm install
+RUN npm install /web/js-package
 
 EXPOSE  8080
-ENTRYPOINT ["nodejs", "./index.js"]
+ENTRYPOINT ["nodejs", "./js-package/index.js"]
