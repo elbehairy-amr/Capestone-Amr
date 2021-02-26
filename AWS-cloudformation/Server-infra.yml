@@ -1,6 +1,6 @@
 Description: >
-    Nyan Lin Tun / Udagram
-    Deploys 'Udagram' application servers
+    Capstone Server
+    Deploy
 Parameters:
     EnvironmentName:
         Description: Single Parameter that we are passing with the env name.
@@ -83,35 +83,7 @@ Resources:
       Roles:
         - !Ref UdacityS3Read&WriteEC2
   
-  UdacityS3Read&WriteEC2:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Principal:
-            Service:
-            - ec2.amazonaws.com
-          Action:
-          - sts:AssumeRole
-      Path: "/"
   
-  IAMPolicies:
-    Type: AWS::IAM::Policy
-    Properties:
-      PolicyName: s3AllowAccess 
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Action:
-          - "s3:Get*"
-          - "s3:List*"
-          - "s3:PutObject"
-          Resource: "*"
-      Roles:
-      - !Ref UdacityS3Read&WriteEC2
 
   WebAppGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
