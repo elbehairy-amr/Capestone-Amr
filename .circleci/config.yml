@@ -47,18 +47,15 @@ jobs:
       - run:
           name: VPC Deploy
           command: |   
-            pwd    
-            aws cloudformation create-stack --stack-name vpc-capstone \
-              --template-body file://./AWS-cloudformation/Network.yml \
-              --parameters file://./AWS-cloudformation/Network-Prameters \
-              | grep -i StackId >> file.stdout && var=$(awk '{print $2} file.stdout)
-            aws cloudformation wait stack-exists --stack-name $var
-               
-                
-                 
-          
-          
-               
+               aws cloudformation deploy --template-file ./AWS-cloudformation/Network.yml  \
+                --stack-name vpc-capstone \
+                --parameters-overrides EnvironmentName="Capstone-VPC" \
+                    VpcCIDR="10.0.0.0/16" PublicSubnet1CIDR="10.0.0.0/24" \
+                    PublicSubnet2CIDR="10.0.1.0/24" \
+                    PrivateSubnet1CIDR ="10.0.2.0/24" \
+                    PrivateSubnet2CIDR=10.0.3.0/24
+ 
+              
 workflows:
   default:
     jobs:
