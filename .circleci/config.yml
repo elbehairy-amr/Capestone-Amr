@@ -55,6 +55,21 @@ jobs:
                     "PublicSubnet2CIDR=10.0.1.0/24" \
                     "PrivateSubnet1CIDR =10.0.2.0/24" \
                     "PrivateSubnet2CIDR=10.0.3.0/24"
+  
+  DeployInfra-Server:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name : Server Infra
+          command: |
+              aws cloudformation deploy \
+                --template-file ./AWS-cloudformation/Server-infra.yml \
+                --stack-name Server-Capstone \
+                --parameter-overrides "EnvironmentName=Capstone-VPC"
+
+
  
               
 workflows:
@@ -64,7 +79,9 @@ workflows:
       - Lint:
           requires: [Install]
       - DeployInfra-VPC:
-          requires: [Lint]    
+          requires: [Lint] 
+      - DeployInfra-Server:
+          requires: [DeployInfra-VPC]       
       
                 
             
