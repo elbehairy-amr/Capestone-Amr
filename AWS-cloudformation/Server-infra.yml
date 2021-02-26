@@ -54,7 +54,6 @@ Resources:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       ImageId: ami-07b4f3c02c7f83d59
-      IamInstanceProfile: !Ref ProfileWithRolesForOurApp
       SecurityGroups:
        - Ref: WebServerSecGroup
       InstanceType: t3.small 
