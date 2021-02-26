@@ -50,7 +50,7 @@ jobs:
                aws cloudformation deploy \
                 --template-file ./AWS-cloudformation/Network.yml  \
                 --stack-name vpc-capstone \
-                --parameter-overrides "EnvironmentName=Capstone-VPC" \
+                --parameter-overrides "EnvironmentName=Capstone" \
                     "VpcCIDR=10.0.0.0/16" "PublicSubnet1CIDR=10.0.0.0/24" \
                     "PublicSubnet2CIDR=10.0.1.0/24" \
                     "PrivateSubnet1CIDR =10.0.2.0/24" \
@@ -67,7 +67,7 @@ jobs:
               aws cloudformation deploy \
                 --template-file ./AWS-cloudformation/Server-infra.yml \
                 --stack-name Server-Capstone \
-                --parameter-overrides "EnvironmentName=Capstone-VPC"
+                --parameter-overrides "EnvironmentName=Capstone"
 
 
  
