@@ -53,10 +53,6 @@ Resources:
   WebAppLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      UserData:
-        Fn::Base64: !Sub |
-          echo
-
       ImageId: ami-07b4f3c02c7f83d59
       IamInstanceProfile: !Ref ProfileWithRolesForOurApp
       SecurityGroups:
@@ -130,10 +126,3 @@ Resources:
       VpcId:
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
-
-Outputs:
-  LoadBalancerDNS:
-    Description: LB DNS to access the application
-    Value: !Join [ "", [ "http://", !GetAtt WebAppLB.DNSName ] ]
-    Export:
-      Name: !Sub "${EnvironmentName}-LB-DNS"
