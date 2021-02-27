@@ -54,6 +54,7 @@ Resources:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       ImageId: ami-07b4f3c02c7f83d59
+      KeyName: aws-key
       SecurityGroups:
        - Ref: WebServerSecGroup
       InstanceType: t2.micro
@@ -68,7 +69,7 @@ Resources:
     Properties:
       VPCZoneIdentifier:
         - Fn::ImportValue:
-            !Sub "${EnvironmentName}-PRIV-NETS"
+            !Sub ${EnvironmentName}-PUB-NETS
       LaunchConfigurationName:
         Ref: WebAppLaunchConfig
       MinSize: '1'
