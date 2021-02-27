@@ -53,7 +53,15 @@ Resources:
   WebAppLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: ami-07b4f3c02c7f83d59
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update -y
+          amazon-linux-extras install docker
+          yum install docker
+          service docker start
+          usermod -a -G docker ec2-user
+      ImageId: ami-09c5e030f74651050
       KeyName: aws-key
       SecurityGroups:
        - Ref: WebServerSecGroup
