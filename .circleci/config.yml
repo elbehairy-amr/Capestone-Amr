@@ -74,7 +74,7 @@ jobs:
           name: add ip to inventory.txt
           command: | 
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --output text >> ./Ansilbe/inventory.txt
+            --output text >> ./Ansible/inventory.txt
             cat ./Ansible/inventory.txt
             
             aws ec2 describe-instances \
