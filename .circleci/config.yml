@@ -80,6 +80,8 @@ jobs:
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text > Ansible/IP.txt
+              yum -y install tar
+              yum -y install gzip
 
       - persist_to_workspace:
           root: Ansible
