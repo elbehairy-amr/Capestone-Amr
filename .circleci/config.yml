@@ -75,7 +75,7 @@ jobs:
           command: | 
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text >> Ansible/inventory.txt
-            cat ./Ansible/inventory.txt
+            cat Ansible/inventory.txt
             
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
