@@ -91,6 +91,13 @@ jobs:
       - image : "python:3.7-alpine3.11"
     steps:
       - checkout
+      - run:
+          name: install tar 
+          command: |
+            yum -y install tar
+            yum -y install gzip
+
+
       - attach_workspace:
           at: Ansible
 
