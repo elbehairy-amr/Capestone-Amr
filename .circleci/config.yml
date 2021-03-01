@@ -93,15 +93,22 @@ jobs:
       - image : "python:3.7-alpine3.11"
     steps:
       - checkout
-      - run:
-          name: install tar 
-          command: |
-            yum -y install tar
-            yum -y install gzip
-
-
+      - add_ssh_keys:
+          fingerprints:["0d:b8:af:b5:63:a3:73:2e:ce:48:06:c7:c5:63:e9:66"]
       - attach_workspace:
           at: Ansible
+      - run:
+          name: Install dependencies
+          command: | 
+            apk add --update Ansible
+            apk add --update tar
+            apk add --update gzip
+      - run:
+          name : configure server 
+          command: | 
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ./Ansible/inventory.txt ./Ansible/config.yml
+      
+
 
 
       
