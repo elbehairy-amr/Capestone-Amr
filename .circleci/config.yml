@@ -101,9 +101,8 @@ jobs:
       - run:
           name: Install dependencies
           command: | 
-            apk add --update Ansible
-            apk add --update tar
-            apk add --update gzip
+            yum -y install tar
+            yum -y install gzip
       - run:
           name : configure server 
           command: | 
