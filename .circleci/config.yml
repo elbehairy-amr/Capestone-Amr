@@ -98,11 +98,7 @@ jobs:
           fingerprints: ["0d:b8:af:b5:63:a3:73:2e:ce:48:06:c7:c5:63:e9:66"]
       - attach_workspace:
           at: Ansible
-      - run:
-          name: Install dependencies
-          command: | 
-            yum -y install tar
-            yum -y install gzip
+
       - run:
           name : configure server 
           command: | 
