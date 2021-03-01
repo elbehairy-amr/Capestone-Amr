@@ -26,6 +26,11 @@ Resources:
           FromPort: 80
           ToPort: 80
           IpProtocol: tcp
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          ToPort: 43567
+          IpProtocol: tcp  
+
   
   WebServerSecGroup:
     Type: AWS::EC2::SecurityGroup
@@ -49,6 +54,10 @@ Resources:
           FromPort: 22
           ToPort: 22
           IpProtocol: tcp
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          ToPort: 43567
+          IpProtocol: tcp 
   
   WebAppLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -61,6 +70,7 @@ Resources:
           yum install docker
           service docker start
           usermod -a -G docker ec2-user
+          
       ImageId: ami-09c5e030f74651050
       KeyName: aws-key
       SecurityGroups:
@@ -105,7 +115,7 @@ Resources:
           Ref: WebAppTargetGroup
       LoadBalancerArn:
         Ref: WebAppLB 
-      Port: '80'
+      Port: '43567'
       Protocol: HTTP
 
   ALBListenerRule:
