@@ -13,12 +13,17 @@
       copy:
         src: /root/project
         dest: /home/ec2-user
+    
     - name: "install dependencies."
       become: true
-      apt:
-       name: ["nodejs", "npm"]
-        state: latest
-        update_cache: yes
+      yum:
+       name:
+        - nodejs
+        - npm
+       state: latest
+       update_cache: yes
+
+
         
     
 
