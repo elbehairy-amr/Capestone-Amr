@@ -16,7 +16,7 @@
 
 - name: "Copy files to EC2 instance"
   copy:
-    src: /root/project/backend.tar.gz
+    src: /root/project/
     dest: /home/ubuntu
 
 - name: "Unzip files for project"
