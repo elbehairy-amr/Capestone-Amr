@@ -1,4 +1,4 @@
-### Capstone 
+######## Capstone 
 
 
 PipeLine stages,
