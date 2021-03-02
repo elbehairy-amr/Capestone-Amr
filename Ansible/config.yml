@@ -24,6 +24,7 @@
       make:
         chdir: /home/ec2-user/project
         target: stop
+        ignore_errors: yes
 
     - name:
       make:
