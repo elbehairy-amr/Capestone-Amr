@@ -1,6 +1,6 @@
 # Capstone 
 
-Piple stages 
+PipeLine stages,
 
 Test installing packages. 
 
