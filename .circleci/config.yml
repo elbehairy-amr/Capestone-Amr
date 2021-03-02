@@ -6,8 +6,10 @@ orbs:
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
 
+
+
 jobs: 
-  Install:
+  Install:  # Install That you can install js-package without issues. 
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -21,7 +23,7 @@ jobs:
       - save_cache:
           paths: [js-package/node_modules]
           key: node_modules
-  #
+  # Lint DockerFile
   Lint:
     docker:
       - image: python:3.7.3-stretch
@@ -38,7 +40,7 @@ jobs:
           command: |
             hadolint Dockerfile --ignore DL3008 --ignore DL3016
            
-  
+# Deploy VPC-InfraStructure.  
 
   DeployInfra-VPC:
     docker:
@@ -56,6 +58,8 @@ jobs:
                     "PublicSubnet2CIDR=10.0.1.0/24" \
                     "PrivateSubnet1CIDR =10.0.2.0/24" \
                     "PrivateSubnet2CIDR=10.0.3.0/24"
+  
+# Deploy Server-Infra.  
   
   DeployInfra-Server:
     docker:
@@ -88,6 +92,7 @@ jobs:
           paths:
             - inventory.txt
             - IP.txt
+# Configure Infra-Structure using Ansible.  
   
   Configure-Infrastructure:
     docker :
@@ -104,17 +109,6 @@ jobs:
           command: | 
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ./Ansible/inventory.txt ./Ansible/config.yml
       
-
-
-
-      
-
-
-           
-
-
- 
-              
 workflows:
   default:
     jobs:
