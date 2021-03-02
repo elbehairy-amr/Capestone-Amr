@@ -1,20 +1,16 @@
-# Docker node.js example app
+# Capstone 
 
-To build a container:
-```
-$ make build
-```
+Piple stages 
 
-Following command will start Docker image in background
-```
-$ make run
-```
+Test installing packages. 
 
-you can test it with:
-```
-$ make test
-```
-or simply run:
-```
-curl -v localhost:43567
-```
+Lint  
+
+DeployInfra-VPC
+
+Deployinfra-Server 
+
+Configure-Server , build and run docker image using Ansible.
+
+
+
