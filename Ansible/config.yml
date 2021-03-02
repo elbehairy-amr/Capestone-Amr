@@ -14,7 +14,7 @@
       copy:
         src: /root/project
         dest: /home/ec2-user
-        force : no
+        force : yes
     
     - name:
       make:
