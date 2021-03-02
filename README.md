@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ##### Capstone 
+=======
+######## Capstone 
+>>>>>>> e6fe59c700d26f371b2c5615e773dd8aacaf4297
 
 # Instance is deployed in public subnet , as a best practice , it should be deployed in private Network and in this case CircileCI will need VPN connection to VPC
 
