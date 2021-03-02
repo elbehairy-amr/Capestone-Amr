@@ -23,8 +23,14 @@
     - name:
       make:
         chdir: /home/ec2-user/project
+        target: stop
+
+    - name:
+      make:
+        chdir: /home/ec2-user/project
         target: run
-      become: yes    
+      become: yes   
+
 
 
 

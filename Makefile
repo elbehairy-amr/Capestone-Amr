@@ -18,5 +18,8 @@ test:
 clean:
 	rm -rf node_modules
 
+stop:
+	docker stop $(NAME)
+
 
 .PHONY: install build run test clean
