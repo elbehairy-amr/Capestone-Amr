@@ -19,7 +19,7 @@ clean:
 	rm -rf node_modules
 
 stop:
-	docker stop $(NAME)
+	docker stop $(docker ps -aq)
 
 
 .PHONY: install build run test clean
