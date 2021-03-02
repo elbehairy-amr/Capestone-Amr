@@ -70,6 +70,9 @@ Resources:
           yum install docker
           service docker start
           usermod -a -G docker ec2-user
+          yum install python3 -y
+          yum install python3-pip
+          alternatives --set python /user/bin/python3 
           
       ImageId: ami-09c5e030f74651050
       KeyName: aws-key

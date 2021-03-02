@@ -89,7 +89,7 @@ jobs:
             - inventory.txt
             - IP.txt
   
-  configure-infrastructure:
+  Configure-Infrastructure:
     docker :
       - image : "doomatel/circleci-ansible"
     steps:
@@ -125,7 +125,7 @@ workflows:
           requires: [Lint] 
       - DeployInfra-Server:
           requires: [DeployInfra-VPC] 
-      - configure-infrastructure:
+      - Configure-Infrastructure:
           requires: [DeployInfra-Server]          
       
                 
