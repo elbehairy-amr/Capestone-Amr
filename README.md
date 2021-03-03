@@ -1,26 +1,23 @@
-<<<<<<< HEAD
-##### Capstone 
-=======
-######## Capstone 
->>>>>>> e6fe59c700d26f371b2c5615e773dd8aacaf4297
 
-# Instance is deployed in public subnet , as a best practice , it should be deployed in private Network and in this case CircileCI will need VPN connection to VPC
+# Capstone Blue/Green Deployment Using CircleCI
 
-PipeLine stages,
+ Instance is deployed in public subnet , as a best practice , it should be deployed in private Network and in this case CircleCI will need VPN connection to VPC
+
+# PipeLine stages,
 
 Test installing packages. 
 
-Lint  
+Lint. 
 
-DeployInfra-VPC
+DeployInfra-VPC.
 
 Deployinfra-Server 
 
-Configure-Server , build and run docker image using Ansible.
+Configure-Server , build and run docker image using Ansible with Kubernetes.
 
 
 
-Blue Branch :
+# Blue Branch :
 
 Deploy Blue VPC-Stack
 Deploy Blue Server stack 
@@ -42,7 +39,7 @@ EnvironmentName=Capstone-blue >> EnvironmentName=Capstone
 
 
 
-
+This well froice update changes on the Master Branch.
 
 
 
