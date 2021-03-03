@@ -67,6 +67,13 @@ Resources:
           #!/bin/bash
           apt-get update -y
           apt-get install unzip awscli -y 
+          apt install software-properties-common
+          apt-add-repository --yes --update ppa:ansible/ansible
+          apt install ansible
+          apt install python3-pip
+
+
+
           
       ImageId: ami-07b4f3c02c7f83d59
       KeyName: aws-key

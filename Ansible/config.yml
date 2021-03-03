@@ -1,6 +1,6 @@
 - name: "Configuration Play" 
   hosts: web
-  user: ec2-user
+  user: ubntu
   gather_facts: false
 
   vars:
@@ -13,18 +13,18 @@
     - name: "Copy files to EC2 instance"
       copy:
         src: /root/project
-        dest: /home/ec2-user
+        dest: /home/ubuntu
         force : yes
     
     - name:
       make:
-        chdir: /home/ec2-user/project
+        chdir: /home/ubuntu/project
         target: build
 
 
     - name:
       make:
-        chdir: /home/ec2-user/project
+        chdir: /home/ubuntu/project
         target: run
       become: yes   
 
