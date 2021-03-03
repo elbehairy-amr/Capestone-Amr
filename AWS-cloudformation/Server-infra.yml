@@ -78,11 +78,11 @@ Resources:
       KeyName: aws-key
       SecurityGroups:
        - Ref: WebServerSecGroup
-      InstanceType: t2.micro
+      InstanceType: t2.medium
       BlockDeviceMappings:
        - DeviceName: "/dev/sdk"
          Ebs:
-           VolumeSize: '10'
+           VolumeSize: '20'
            
   
   WebAppGroup:

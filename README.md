@@ -19,8 +19,9 @@ Configure-Server , build and run docker image using Ansible with Kubernetes.
 
 # Blue Branch :
 
-Deploy Blue VPC-Stack
-Deploy Blue Server stack 
+-Deploy Blue VPC-Stack
+
+-Deploy Blue Server stack 
 
 Action To perfrom before merge.
 
@@ -39,7 +40,7 @@ EnvironmentName=Capstone-blue >> EnvironmentName=Capstone
 
 
 
-This well froice update changes on the Master Branch.
+
 
 
 
