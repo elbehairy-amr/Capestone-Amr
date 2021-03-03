@@ -71,7 +71,7 @@ Resources:
           apt-add-repository --yes --update ppa:ansible/ansible
           apt install ansible
           apt install python3-pip
-		      apt install make
+		      
 
       
       ImageId: ami-07b4f3c02c7f83d59
