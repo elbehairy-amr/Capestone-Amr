@@ -66,15 +66,9 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           apt-get update -y
-          amazon-linux-extras install docker
-          yum install docker
-          service docker start
-          usermod -a -G docker ec2-user
-          yum install python3 -y
-          yum install python3-pip
-          alternatives --set python /user/bin/python3 
+          apt-get install unzip awscli -y 
           
-      ImageId: ami-09c5e030f74651050
+      ImageId: ami-07b4f3c02c7f83d59
       KeyName: aws-key
       SecurityGroups:
        - Ref: WebServerSecGroup
