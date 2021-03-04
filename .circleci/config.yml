@@ -1,74 +1,127 @@
-- name: "Configuration Play"
-  hosts: web
-  user: ubuntu
-  gather_facts: false
-  become: true
-
-
-  vars:
-    - ansible_python_interpreter: /usr/bin/python3
-    - ansible_host_key_checking: false
-    - ansible_stdout_callback: yaml
-
-  tasks:
-  - name: "Copy files to EC2 instance"
-    copy:
-      src: /root/project
-      dest: /home/ubuntu
-      force : yes
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+# Use a package of configuration called an orb.
+orbs:
+  # Declare a dependency on the welcome-orb
+  welcome: circleci/welcome-orb@0.4.1
+# Orchestrate or schedule a set of jobs
 
 
 
-  - name: upgrade apt packages
-    become: true
-    apt:
-      upgrade: yes
-      update_cache: yes
+jobs: 
+  Install:  # Install That you can install js-package without issues. 
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout 
+      - run: 
+          name : Install npm
+          command: | 
+            cd ./js-package
+            npm run test
+            npm install
+      - save_cache:
+          paths: [js-package/node_modules]
+          key: node_modules
+  # Lint DockerFile
+  Lint:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - run:
+          name : install hado Lint 
+          command: | 
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolint
+  
+      - run:
+          name : Hadolint 
+          command: |
+            hadolint Dockerfile --ignore DL3008 --ignore DL3016
+           
+# Deploy VPC-InfraStructure.  
 
-  - name : install counter track
-    apt:
-     name: conntrack
+  DeployInfra-VPC:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: VPC Deploy
+          command: |   
+               aws cloudformation deploy \
+                --template-file ./AWS-cloudformation/Network.yml  \
+                --stack-name vpc-capstone \
+                --parameter-overrides "EnvironmentName=Capstone" \
+                    "VpcCIDR=10.0.0.0/16" "PublicSubnet1CIDR=10.0.0.0/24" \
+                    "PublicSubnet2CIDR=10.0.1.0/24" \
+      
+  
+# Deploy Server-Infra.  
+  
+  DeployInfra-Server:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name : Server Infra
+          command: |
+              aws cloudformation deploy \
+                --template-file ./AWS-cloudformation/Server-infra.yml \
+                --stack-name Server-Capstone \
+                --parameter-overrides "EnvironmentName=Capstone"
+      
+      - run: 
+          name: add ip to inventory.txt
+          command: | 
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --output text   >> Ansible/inventory.txt
+            cat Ansible/inventory.txt
+            
+            aws ec2 describe-instances \
+            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --output text > Ansible/IP.txt
+              yum -y install tar
+              yum -y install gzip
 
-  - name: enable docker service
-    command: sudo systemctl enable docker.service
+      - persist_to_workspace:
+          root: Ansible
+          paths:
+            - inventory.txt
+            - IP.txt
+# Configure Infra-Structure using Ansible.  
+  
+  Configure-Infrastructure:
+    docker :
+      - image : "doomatel/circleci-ansible"
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["0d:b8:af:b5:63:a3:73:2e:ce:48:06:c7:c5:63:e9:66"]
+      - attach_workspace:
+          at: Ansible
 
-  - name: make minikube.sh executable
-    command: sudo chmod +x /home/ubuntu/project/Ansible/minikube.sh
+      - run:
+          name : configure server 
+          command: | 
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ./Ansible/inventory.txt ./Ansible/config.yml
+      
+workflows:
+  default:
+    jobs:
+      - Install
+      - Lint
+      - DeployInfra-VPC:
+          requires: [Lint] 
+      - DeployInfra-Server:
+          requires: [DeployInfra-VPC] 
+      - Configure-Infrastructure:
+          requires: [DeployInfra-Server]          
+      
+                
+            
 
-  - name: make kubectl.sh executable
-    command: sudo chmod +x /home/ubuntu/project/Ansible/kubectl.sh
-
-  - name: Install kubectl
-    script:
-     cmd: kubectl.sh
-     chdir: /home/ubuntu/project/Ansible/
-
-  - name: Make the kubectl binary executable
-    command: chmod +x /home/ubuntu/project/Ansible/kubectl
-
-  - name: sudo mv ./kubectl /usr/local/bin/kubectl
-    command: sudo mv /home/ubuntu/project/Ansible/kubectl /usr/local/bin/kubectl
-
-
-
-  - name: Install minikube
-    script:
-     cmd: minikube.sh
-     chdir: /home/ubuntu/project/Ansible
-
-
-  - name : Start minbikube
-    command: bash /home/ubuntu/project/start-minikube.sh
-
-
-  - name: make service
-    make:
-      chdir: /home/ubuntu/project/
-      target: deploy-service
-    become: true
-
-  - name: make pod
-    make:
-      chdir: /home/ubuntu/project/
-      target: deploy
-    become: true
+            
+            
