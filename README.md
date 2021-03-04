@@ -1,8 +1,8 @@
+GitHub URL: https://github.com/elbehairy-amr/Capestone-Amr
 
-# Capstone Blue/Green Deployment Using CircleCI
+# Capstone Project Deployed with AWS cloudformation/CircleCI/ MiniKube installed with Ansible.
 
-
- Instance is deployed in public subnet , as a best practice , it should be deployed in private Network and in this case CircleCI will need VPN connection to VPC
+# CircleCI Blue/Green
 
 # PipeLine stages,
 
@@ -24,7 +24,7 @@ Configure-Server , build and run docker image using Ansible with Kubernetes.
 
 -Deploy Blue Server stack 
 
-Action To perfrom before merge.
+Action To perfromed before merge.
 
 Change CircleCI config.yml Templete 
 
@@ -38,6 +38,9 @@ EnvironmentName=Capstone-blue >> EnvironmentName=Capstone
 
 --stack-name vpc-capstone-blue >> --stack-name vpc-capstone
 EnvironmentName=Capstone-blue >> EnvironmentName=Capstone
+
+
+
 
 
 

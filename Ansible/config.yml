@@ -34,21 +34,23 @@
 
   - name: enable docker service
     command: sudo systemctl enable docker.service
-  
+
   - name: make minikube.sh executable
     command: sudo chmod +x /home/ubuntu/project/Ansible/minikube.sh
 
   - name: make kubectl.sh executable
-    command: sudo chmod +x /home/ubuntu/project/Ansible/kubectl.sh   
+    command: sudo chmod +x /home/ubuntu/project/Ansible/kubectl.sh
 
   - name: Install kubectl
-    shell: bash /home/ubuntu/project/Ansible/kubectl.sh
+    script:
+     cmd: kubectl.sh
+     chdir: /home/ubuntu/project/Ansible/
 
   - name: Make the kubectl binary executable
-    command: sudo chmod +x ./kubectl
+    command: chmod +x /home/ubuntu/project/Ansible/kubectl
 
   - name: sudo mv ./kubectl /usr/local/bin/kubectl
-    command: sudo mv ./kubectl /usr/local/bin/kubectl
+    command: sudo mv /home/ubuntu/project/Ansible/kubectl /usr/local/bin/kubectl
 
 
 
@@ -62,8 +64,14 @@
     command: sudo -i
     command: minikube start --driver=none
 
-  - name: Create POD
-    command : sudo kubectl apply -f /home/ubuntu/project/kube/client-pod.yaml
+  - name:
+    make:
+      chdir: /home/ubuntu/project/kube/
+      target: deploy-service
+    become: yes
 
-  - name: Create Seervice 
-    command : /home/ubuntu/project/kube/client-node-yaml      
+  - name:
+    make:
+      chdir: /home/ubuntu/project/kube/
+      target: deploy
+    become: yes

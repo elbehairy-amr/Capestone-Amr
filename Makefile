@@ -18,7 +18,10 @@ test:
 clean:
 	rm -rf node_modules
 
+deploy:
+  sudo kubectl apply -f /home/ubuntu/project/kube/client-pod.yaml
 
-
+deploy-service:
+	sudo kubectl apply -f /home/ubuntu/project/kube/client-pod.yaml
 
 .PHONY: install build run test clean
