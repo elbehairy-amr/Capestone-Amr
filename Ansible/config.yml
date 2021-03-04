@@ -3,42 +3,15 @@
   user: ubuntu
   gather_facts: false
 
+
   vars:
     - ansible_python_interpreter: /usr/bin/python3
     - ansible_host_key_checking: false
     - ansible_stdout_callback: yaml
 
   tasks:
-    - name:
-      command: sudo apt-get install apt-transport-https ca-certificates curl gnupg -y
+   - name: Install Docker
+     become: true
+     apt: name=docker.io state=present force_apt_get=yes
+
     
-    - name:
-      shell: | 
-         echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg]\
-         https://download.docker.com/linux/ubuntu \
-         $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      args:
-         executable: /bin/bash
-    - name:
-      command: sudo apt-get update
-    - name:
-      command: sudo apt-get install docker-ce docker-ce-cli containerd.io -y  
-
-    - name: "Copy files to EC2 instance"
-      copy:
-        src: /root/project
-        dest: /home/ubuntu
-        force : yes
-
-
-    - name:
-      make:
-        chdir: /home/ubuntu/project
-        target: build
-
-
-    - name:
-      make:
-        chdir: /home/ubuntu/project
-        target: run
-      become: yes

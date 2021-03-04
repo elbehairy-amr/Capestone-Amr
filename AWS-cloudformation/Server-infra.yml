@@ -66,6 +66,7 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           apt-get update -y
+          apt-get upgrade
           apt-get install unzip awscli -y 
           apt install software-properties-common
           apt-add-repository --yes --update ppa:ansible/ansible
