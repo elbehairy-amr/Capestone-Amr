@@ -10,9 +10,9 @@
     - ansible_stdout_callback: yaml
 
   tasks:
-   - name: Install Docker
+   - name: Add Kubernetes Signing Key
      become: true
-     apt: name=docker.io state=present force_apt_get=yes
+     raw: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
    
    - name: "Copy files to EC2 instance"
      copy:
