@@ -16,41 +16,48 @@
       src: /root/project
       dest: /home/ubuntu
       force : yes
-  
+
   - name: "APT: Install aptitude package"
     apt:
       name: aptitude
       force_apt_get: yes
-  
+
   - name: upgrade apt packages
     become: true
     apt:
       upgrade: yes
-      update_cache: yes   
-  
+      update_cache: yes
+
+  - name : install counter track
+    apt:
+     name: conntrack
+
   - name: enable docker service
     command: sudo systemctl enable docker.service
-
-  - name: Install kubectl 
-    apt:
-      name: "{{ packages }}"
-      state: present
-      update_cache: yes
-    vars:
-      packages:
-        - kubectl
-  - name: Install kubectl 
-    shell: sudo bash /home/ubuntu/Ansible/minikube.sh
-  - name : Start minbikube
-    command: minikube start --driver=none    
-
-
-
-
-
-
-
   
+  - name: make minikube.sh executable
+    command: sudo chmod +x /home/ubuntu/project/Ansible/minikube.sh
+
+  - name: make kubectl.sh executable
+    command: sudo chmod +x /home/ubuntu/project/Ansible/kubectl.sh   
+
+  - name: Install kubectl
+    shell: bash /home/ubuntu/project/Ansible/kubectl.sh
+
+  - name: Make the kubectl binary executable
+    command: sudo chmod +x ./kubectl
+
+  - name: sudo mv ./kubectl /usr/local/bin/kubectl
+    command: sudo mv ./kubectl /usr/local/bin/kubectl
 
 
 
+  - name: Install minikube
+    script:
+     cmd: minikube.sh
+     chdir: /home/ubuntu/project/Ansible
+
+
+  - name : Start minbikube
+    command: sudo -i
+    command: minikube start --driver=none
