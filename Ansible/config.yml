@@ -17,10 +17,7 @@
       dest: /home/ubuntu
       force : yes
 
-  - name: "APT: Install aptitude package"
-    apt:
-      name: aptitude
-      force_apt_get: yes
+
 
   - name: upgrade apt packages
     become: true
