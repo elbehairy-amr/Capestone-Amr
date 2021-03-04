@@ -61,3 +61,9 @@
   - name : Start minbikube
     command: sudo -i
     command: minikube start --driver=none
+
+  - name: Create POD
+    command : sudo kubectl apply -f /home/ubuntu/project/kube/client-pod.yaml
+
+  - name: Create Seervice 
+    command : /home/ubuntu/project/kube/client-node-yaml      
