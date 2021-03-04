@@ -11,15 +11,17 @@
     - ansible_stdout_callback: yaml
 
   tasks:
- # - name: "Copy files to EC2 instance"
-  #  copy:
-   #   src: /root/project
-    #  dest: /home/ubuntu
-     # force : yes
+  - name: "Copy files to EC2 instance"
+    copy:
+      src: /root/project
+      dest: /home/ubuntu
+      force : yes
+  
   - name: "APT: Install aptitude package"
     apt:
       name: aptitude
       force_apt_get: yes
+  
   - name: upgrade apt packages
     become: true
     apt:
@@ -88,8 +90,7 @@
   - name: change owner
     command: sudo chown 1000:1000 /home/ubuntu/.kube/config
 
-  - name:
-    command: sudo kubectl apply -f /home/ubuntu/project/Ansible/Kube.yml
+
   
   
 
