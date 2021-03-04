@@ -11,6 +11,14 @@
     - ansible_stdout_callback: yaml
 
   tasks:
+
+
+  - name: upgrade apt packages
+    become: true
+    apt:
+      upgrade: yes
+      update_cache: yes
+  
   - name: Remove swapfile from /etc/fstab
     mount:
       name: "{{ item }}"
