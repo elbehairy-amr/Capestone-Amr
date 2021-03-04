@@ -67,7 +67,7 @@
 
   - name: Assign Unique Hostname for Each Server Node
     command: sudo hostnamectl set-hostname master-node
-  - name: set a worker node hostname by entering the following on the worker server
+  - name: set a worker node hostname 
     command: sudo hostnamectl set-hostname worker01
   - name: enable docker service
     command: sudo systemctl enable docker.service
@@ -80,3 +80,11 @@
     command: sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
   - name: change owner
     command: sudo chown 1000:1000 /home/ubuntu/.kube/config
+  
+  - name: "Copy files to EC2 instance"
+      copy:
+        src: /root/project
+        dest: /home/ubuntu
+        force : yes
+
+
