@@ -28,70 +28,28 @@
       upgrade: yes
       update_cache: yes   
   
-  - name: Remove swapfile from /etc/fstab
-    mount:
-      name: "{{ item }}"
-      fstype: swap
-      state: absent
-    with_items:
-      - swap
-      - none
+  - name: enable docker service
+    command: sudo systemctl enable docker.service
 
-  - name: Disable swap
-    shell: sudo swapoff -a
-
-
-  - name: Add an apt signing key for Kubernetes
-    apt_key:
-      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-      state: present
-
-  - name: Adding apt repository for Kubernetes
-    apt_repository:
-      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
-      state: present
-      filename: kubernetes.list
-
-  - name: Install Kubernetes binaries
+  - name: Install kubectl 
     apt:
       name: "{{ packages }}"
       state: present
       update_cache: yes
     vars:
       packages:
-        - kubelet
-        - kubeadm
         - kubectl
+  - name: Install kubectl 
+    shell: sudo bash /home/ubuntu/Ansible/minikube.sh
+  - name : Start minbikube
+    command: minikube start --driver=none    
 
 
 
-  - name: Restart kubelet
-    service:
-      name: kubelet
-      daemon_reload: yes
-      state: restarted
-
-  - name: Assign Unique Hostname for Each Server Node
-    command: sudo hostnamectl set-hostname master-node
-
-  - name: enable docker service
-    command: sudo systemctl enable docker.service
-  
-  - name: Initialize Kubernetes on Master Node
-    command: sudo  kubeadm init --pod-network-cidr=10.244.0.0/16
-    ignore_errors: yes
-  
-  - name: create a directory for the cluster
-    command: mkdir -p /home/ubuntu/.kube
-  
-  - name: copy dirctory
-    command: sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
-  
-  - name: change owner
-    command: sudo chown 1000:1000 /home/ubuntu/.kube/config
 
 
-  
+
+
   
 
 
