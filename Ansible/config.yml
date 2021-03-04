@@ -12,12 +12,15 @@
 
   tasks:
 
-
+  - name: "APT: Install aptitude package"
+    apt:
+      name: aptitude
+      force_apt_get: yes
   - name: upgrade apt packages
     become: true
     apt:
       upgrade: yes
-      update_cache: yes
+      update_cache: yes   
   
   - name: Remove swapfile from /etc/fstab
     mount:
