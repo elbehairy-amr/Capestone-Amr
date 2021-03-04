@@ -76,6 +76,7 @@ Resources:
           apt install python-apt -y
           apt-get install docker.io -y
           systemctl enable docker
+          systemctl start docker 
 
 
           
