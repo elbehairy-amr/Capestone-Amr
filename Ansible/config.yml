@@ -11,7 +11,11 @@
     - ansible_stdout_callback: yaml
 
   tasks:
-
+  - name: "Copy files to EC2 instance"
+    copy:
+      src: /root/project
+      dest: /home/ubuntu
+      force : yes
   - name: "APT: Install aptitude package"
     apt:
       name: aptitude
@@ -67,24 +71,29 @@
 
   - name: Assign Unique Hostname for Each Server Node
     command: sudo hostnamectl set-hostname master-node
-  - name: set a worker node hostname 
-    command: sudo hostnamectl set-hostname worker01
+
   - name: enable docker service
     command: sudo systemctl enable docker.service
+  
   - name: Initialize Kubernetes on Master Node
     command: sudo  kubeadm init --pod-network-cidr=10.244.0.0/16
     ignore_errors: yes
+  
   - name: create a directory for the cluster
     command: mkdir -p /home/ubuntu/.kube
+  
   - name: copy dirctory
     command: sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
+  
   - name: change owner
     command: sudo chown 1000:1000 /home/ubuntu/.kube/config
+
+  - name:
+    command: sudo kubectl apply -f "{{ item }}"
+    with_items:
+      - sudo kubectl apply -f /home/ubuntu/project/Ansible/kube.yml
   
-  - name: "Copy files to EC2 instance"
-    copy:
-      src: /root/project
-      dest: /home/ubuntu
-      force : yes
+  
+
 
 
