@@ -1,6 +1,6 @@
 
 # Capstone Blue/Green Deployment Using CircleCI
-#
+
 
  Instance is deployed in public subnet , as a best practice , it should be deployed in private Network and in this case CircleCI will need VPN connection to VPC
 
