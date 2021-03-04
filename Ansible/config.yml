@@ -82,9 +82,9 @@
     command: sudo chown 1000:1000 /home/ubuntu/.kube/config
   
   - name: "Copy files to EC2 instance"
-      copy:
-        src: /root/project
-        dest: /home/ubuntu
-        force : yes
+    copy:
+      src: /root/project
+      dest: /home/ubuntu
+      force : yes
 
 
