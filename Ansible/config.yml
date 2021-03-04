@@ -58,17 +58,17 @@
 
 
   - name : Start minbikube
-    command: sudo -i
-    command: minikube start --driver=none
+#    command: bash /home/ubuntu/project/start-minikube.sh
 
-  - name:
+
+  - name: make service
     make:
-      chdir: /home/ubuntu/project/kube/
+      chdir: /home/ubuntu/project/
       target: deploy-service
-    become: yes
+    become: true
 
-  - name:
+  - name: make pod
     make:
-      chdir: /home/ubuntu/project/kube/
+      chdir: /home/ubuntu/project/
       target: deploy
-    become: yes
+    become: true
