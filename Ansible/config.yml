@@ -15,7 +15,7 @@
      apt: name=docker.io state=present force_apt_get=yes
    
    - name: "Copy files to EC2 instance"
-      copy:
+     copy:
         src: /root/project
         dest: /home/ubuntu
         force : yes 
