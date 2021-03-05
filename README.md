@@ -25,20 +25,21 @@ Configure-Server , build and run docker image using Ansible with Kubernetes.
 
 -Deploy Blue Server stack 
 
-Action to be perfromed before merge.
+Action to be perfromed before merge to allow the blue code to be updated in the Production.
 
 Change CircleCI config.yml Templete 
 
 # In DeployInfra-Server
 
 
---stack-name Server-Capstone-blue >> --stack-name Server-Capstone
-EnvironmentName=Capstone-blue >> EnvironmentName=Capstone
+--stack-name Server-Capstone-blue to --stack-name Server-Capstone
+
+EnvironmentName=Capstone-blue to EnvironmentName=Capstone
 
 # In DeployInfra-VPC  
 
---stack-name vpc-capstone-blue >> --stack-name vpc-capstone
-EnvironmentName=Capstone-blue >> EnvironmentName=Capstone
+--stack-name vpc-capstone-blue to --stack-name vpc-capstone
+EnvironmentName=Capstone-blue to EnvironmentName=Capstone
 
 
 
