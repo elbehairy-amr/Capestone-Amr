@@ -25,11 +25,6 @@
 
 
 
-  - name: upgrade apt packages
-    become: yes
-    apt:
-      upgrade: yes
-      update_cache: yes
 
   - name : install counter track
     apt:
