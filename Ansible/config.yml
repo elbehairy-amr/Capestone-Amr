@@ -11,13 +11,18 @@
     - ansible_stdout_callback: yaml
 
   tasks:
+
+    
   - name: "Copy files to EC2 instance"
     copy:
       src: /root/project
       dest: /home/ubuntu
       force : yes
 
-
+  - name: "APT: Install aptitude package"
+    apt:
+      name: aptitude
+      force_apt_get: yes
 
   - name: upgrade apt packages
     become: yes
