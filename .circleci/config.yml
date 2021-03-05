@@ -112,7 +112,7 @@ jobs:
       - run:
           name : configure server 
           command: |
-            cd ./project
+            cd ./root/project
             tar -czvf /root/project/pack.tar.gz . 
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ./Ansible/inventory.txt ./Ansible/config.yml
       
