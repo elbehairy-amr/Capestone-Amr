@@ -11,7 +11,11 @@
     - ansible_stdout_callback: yaml
 
   tasks:
-
+  - name: "APT: Install aptitude package"
+    apt:
+      name: aptitude
+      force_apt_get: yes
+      update_cache: yes
 
   - name: "Copy files to EC2 instance"
     copy:
@@ -25,10 +29,7 @@
      dest: /home/ubuntu
      remote_src: yes
 
-  - name: "APT: Install aptitude package"
-    apt:
-      name: aptitude
-      force_apt_get: yes
+
 
   - name: upgrade apt packages
     become: yes
@@ -39,6 +40,7 @@
   - name : install counter track
     apt:
      name: conntrack
+     update_cache: yes
 
   - name: enable docker service
     command: sudo systemctl enable docker.service
@@ -62,6 +64,7 @@
   - name: mv /home/ubuntu/project/Ansible/kubectl /usr/local/bin/kubectl
     stat: path=/home/ubuntu/root/project/Ansible/kubectl 
     register: kubectl
+  
   - name:
     command: mv /home/ubuntu/root/project/Ansible/kubectl /usr/local/bin/kubectl
     when: kubectl.stat.exists
@@ -77,6 +80,7 @@
   - name:  mv /home/ubuntu/root/project/Ansible/minikube /usr/local/bin/
     stat: path=/home/ubuntu/root/project/Ansible/minikube
     register: minikube
+  
   - name: 
     command: mv /home/ubuntu/root/project/Ansible/minikube /usr/local/bin/ 
     when: minikube.stat.exists
