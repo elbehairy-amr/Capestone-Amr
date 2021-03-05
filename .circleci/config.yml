@@ -49,8 +49,8 @@ jobs:
           command: |   
                aws cloudformation deploy \
                 --template-file ./AWS-cloudformation/Network.yml  \
-                --stack-name vpc-capstone \
-                --parameter-overrides "EnvironmentName=Capstone" \
+                --stack-name vpc-capstone-blue \
+                --parameter-overrides "EnvironmentName=Capstone-blue" \
                     "VpcCIDR=10.0.0.0/16" "PublicSubnet1CIDR=10.0.0.0/24" \
                     "PublicSubnet2CIDR=10.0.1.0/24" \
       
@@ -67,8 +67,8 @@ jobs:
           command: |
               aws cloudformation deploy \
                 --template-file ./AWS-cloudformation/Server-infra.yml \
-                --stack-name Server-Capstone \
-                --parameter-overrides "EnvironmentName=Capstone"
+                --stack-name Server-Capstone-blue \
+                --parameter-overrides "EnvironmentName=Capstone-blue"
       
       - run: 
           name: add ip to inventory.txt
