@@ -93,9 +93,13 @@
 
 
   - name: make service
-    command: kubectl apply -f /home/ubuntu/project/kube/client-node-port.yaml
-    become: true
+    make: 
+      target: deploy-service
+      chdir: /home/ubuntu/project/
+    
 
   - name: make pod
-    command: kubectl apply -f /home/ubuntu/project/kube/client-pod.yaml
-    become: true
+    make:
+      target: deploy
+      chdir: /home/ubuntu/project/
+    
