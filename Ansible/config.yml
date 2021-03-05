@@ -27,9 +27,7 @@
 
 
      
-## Make sure Docker is enabled 
-  - name: enable docker service
-    command: sudo systemctl enable docker.service
+
 
 # Install  MiniKube and kubectl 
   - name: make minikube.sh executable
