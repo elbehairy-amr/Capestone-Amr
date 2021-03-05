@@ -79,10 +79,10 @@
     register: minikube
   - name: 
     command: mv /home/ubuntu/root/project/Ansible/minikube /usr/local/bin/ 
-    when: minikube.stat.exist
+    when: minikube.stat.exists
   
-  - name: chmod +x /home/ubuntu/root/project/start-minikube.sh
-    command: dest=/home/ubuntu/root/project/start-minikube.sh mode=a+x
+#  - name: chmod +x /home/ubuntu/root/project/start-minikube.sh
+#    command: dest=/home/ubuntu/root/project/start-minikube.sh mode=a+x
 
   - name: Start minbikube
     make:
