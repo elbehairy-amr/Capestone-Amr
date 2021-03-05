@@ -26,10 +26,7 @@
 
 
 
-  - name : install counter track
-    apt:
-     name: conntrack
-     update_cache: yes
+     
 ## Make sure Docker is enabled 
   - name: enable docker service
     command: sudo systemctl enable docker.service
