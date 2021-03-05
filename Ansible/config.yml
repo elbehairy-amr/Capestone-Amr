@@ -57,8 +57,8 @@
      chdir: /home/ubuntu/project/Ansible
 
 
-  - name : Start minbikube
-#    command: bash /home/ubuntu/project/start-minikube.sh
+  - name: Start minbikube
+    command: bash /home/ubuntu/project/start-minikube.sh
 
 
   - name: make service
