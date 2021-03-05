@@ -84,22 +84,22 @@
 #  - name: chmod +x /home/ubuntu/root/project/start-minikube.sh
 #    command: dest=/home/ubuntu/root/project/start-minikube.sh mode=a+x
 
-  - name: Start minbikube
-    make:
-     target: start
-     chdir: /home/ubuntu/root/project/
+#  - name: Start minbikube
+#    make:
+#     target: start
+#     chdir: /home/ubuntu/root/project/
 
 
 
 
-  - name: make service
-    make: 
-      target: deploy-service
-      chdir: /home/ubuntu/root/project/
+#  - name: make service
+#    make: 
+#      target: deploy-service
+#      chdir: /home/ubuntu/root/project/
     
 
-  - name: make pod
-    make:
-      target: deploy
-      chdir: /home/ubuntu/root/project/
+ # - name: make pod
+ #   make:
+ #     target: deploy
+ #     chdir: /home/ubuntu/root/project/
     
