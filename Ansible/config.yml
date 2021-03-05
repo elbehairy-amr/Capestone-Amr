@@ -2,7 +2,7 @@
   hosts: web
   user: ubuntu
   gather_facts: false
-  become: true
+  become: yes
 
 
   vars:
@@ -20,7 +20,7 @@
 
 
   - name: upgrade apt packages
-    become: true
+    become: yes
     apt:
       upgrade: yes
       update_cache: yes
@@ -38,6 +38,8 @@
   - name: make kubectl.sh executable
     command: sudo chmod +x /home/ubuntu/project/Ansible/kubectl.sh
 
+  
+  
   - name: Install kubectl
     script:
      cmd: kubectl.sh
@@ -46,8 +48,8 @@
   - name: Make the kubectl binary executable
     command: chmod +x /home/ubuntu/project/Ansible/kubectl
 
-  - name: sudo mv ./kubectl /usr/local/bin/kubectl
-    command: sudo mv /home/ubuntu/project/Ansible/kubectl /usr/local/bin/kubectl
+  - name: mv /home/ubuntu/project/Ansible/kubectl /usr/local/bin/kubectl
+    command: mv /home/ubuntu/project/Ansible/kubectl /usr/local/bin/kubectl
 
 
 
@@ -55,21 +57,23 @@
     script:
      cmd: minikube.sh
      chdir: /home/ubuntu/project/Ansible
+  - name: chmod +x minikube
+    command: chmod +x /home/ubuntu/project/Ansible/minikube  
+  - name: 
+    command: mv /home/ubuntu/project/Ansible/minikube /usr/local/bin/   
 
   - name: 
-    command: chmod +x home/ubuntu/project/start-minikube.sh
+    command: chmod +x /home/ubuntu/project/start-minikube.sh
   - name: Start minbikube
     command: bash /home/ubuntu/project/start-minikube.sh
+  
 
 
   - name: make service
-    make:
-      chdir: /home/ubuntu/project/
-      target: deploy-service
+    command: kubectl apply -f /home/ubuntu/project/kube/client-node-port.yaml
     become: true
 
   - name: make pod
-    make:
-      chdir: /home/ubuntu/project/
-      target: deploy
+    command: kubectl apply -f /home/ubuntu/project/kube/client-pod.yaml
     become: true
+    
