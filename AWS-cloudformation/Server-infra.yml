@@ -67,6 +67,7 @@ Resources:
           #!/bin/bash
           apt-get update -y
           apt-get upgrade -y
+          apt-get install -y conntrack
           apt-get install unzip awscli -y 
           apt install software-properties-common -y
           apt-add-repository --yes --update ppa:ansible/ansible
