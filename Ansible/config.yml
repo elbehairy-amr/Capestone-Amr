@@ -56,7 +56,8 @@
      cmd: minikube.sh
      chdir: /home/ubuntu/project/Ansible
 
-
+  - name: 
+    command: chmod +x home/ubuntu/project/start-minikube.sh
   - name: Start minbikube
     command: bash /home/ubuntu/project/start-minikube.sh
 
