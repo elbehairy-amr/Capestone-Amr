@@ -24,7 +24,7 @@ Configure-Server , build and run docker image using Ansible with Kubernetes.
 
 -Deploy Blue Server stack 
 
-Action To perfromed before merge.
+Action to be perfromed before merge.
 
 Change CircleCI config.yml Templete 
 
