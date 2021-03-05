@@ -19,7 +19,7 @@
 
   - name: "Copy files to EC2 instance"
     copy:
-      src: /root/project/archive.tar.gz
+      src: /root/archive.tar.gz
       dest: /home/
       force : yes
 
