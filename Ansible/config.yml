@@ -77,8 +77,8 @@
   - name: chmod +x minikube
     file: dest=/home/ubuntu/project/Ansible/minikube  mode=a+x
   
-  - name:  mv /home/ubuntu/root/project/Ansible/minikube /usr/local/bin/
-    stat: path=/home/ubuntu/root/project/Ansible/minikube
+  - name:  mv /home/ubuntu/project/Ansible/minikube /usr/local/bin/
+    stat: path=/home/ubuntu/project/Ansible/minikube
     register: minikube
   
   - name: 
@@ -99,11 +99,11 @@
 #  - name: make service
 #    make: 
 #      target: deploy-service
-#      chdir: /home/ubuntu/root/project/
+#      chdir: /home/ubuntu/project/
     
 
  # - name: make pod
  #   make:
  #     target: deploy
- #     chdir: /home/ubuntu/root/project/
+ #     chdir: /home/ubuntu/project/
     
