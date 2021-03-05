@@ -9,13 +9,7 @@
     - ansible_python_interpreter: /usr/bin/python3
     - ansible_host_key_checking: false
     - ansible_stdout_callback: yaml
-# Install pacakges 
-  tasks:
-  - name: "APT: Install aptitude package"
-    apt:
-      name: aptitude
-      force_apt_get: yes
-      update_cache: yes
+
 # Copy Project Files 
   - name: "Copy files to EC2 instance"
     copy:
