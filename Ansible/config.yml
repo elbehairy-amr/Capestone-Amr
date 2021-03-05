@@ -12,12 +12,18 @@
 
   tasks:
 
-    
+
   - name: "Copy files to EC2 instance"
     copy:
-      src: /root/project
-      dest: /home/ubuntu
+      src: /root/archive.tar.gz
+      dest: /home/
       force : yes
+
+  - name:  Unarchive
+    unarchive:
+     src: /home/archive.tar.gz
+     dest: /home/ubuntu
+     remote_src: yes
 
   - name: "APT: Install aptitude package"
     apt:
@@ -38,40 +44,52 @@
     command: sudo systemctl enable docker.service
 
   - name: make minikube.sh executable
-    command: sudo chmod +x /home/ubuntu/project/Ansible/minikube.sh
+    file: dest=/home/ubuntu/project/Ansible/minikube.sh mode=a+x
 
   - name: make kubectl.sh executable
-    command: sudo chmod +x /home/ubuntu/project/Ansible/kubectl.sh
+    file: dest=/home/ubuntu/project/Ansible/kubectl.sh mode=a+x
 
-  
-  
+
+
   - name: Install kubectl
     script:
      cmd: kubectl.sh
      chdir: /home/ubuntu/project/Ansible/
 
   - name: Make the kubectl binary executable
-    command: chmod +x /home/ubuntu/project/Ansible/kubectl
+    file: dest=/home/ubuntu/project/Ansible/kubectl mode=a+x
 
   - name: mv /home/ubuntu/project/Ansible/kubectl /usr/local/bin/kubectl
+    stat: path=/home/ubuntu/project/Ansible/kubectl 
+    register: kubectl
+  - name:
     command: mv /home/ubuntu/project/Ansible/kubectl /usr/local/bin/kubectl
-
-
+    when: kubectl.stat.exists
 
   - name: Install minikube
     script:
      cmd: minikube.sh
      chdir: /home/ubuntu/project/Ansible
+ 
   - name: chmod +x minikube
-    command: chmod +x /home/ubuntu/project/Ansible/minikube  
-  - name: 
-    command: mv /home/ubuntu/project/Ansible/minikube /usr/local/bin/   
-
-  - name: 
-    command: chmod +x /home/ubuntu/project/start-minikube.sh
-  - name: Start minbikube
-    command: bash /home/ubuntu/project/start-minikube.sh
+    file: dest=/home/ubuntu/project/Ansible/minikube  mode=a+x
   
+  - name:  mv /home/ubuntu/project/Ansible/minikube /usr/local/bin/
+    stat: path=/home/ubuntu/project/Ansible/minikube
+    register: minikube
+  - name: 
+    command: mv /home/ubuntu/project/Ansible/minikube /usr/local/bin/ 
+    when: minikube.stat.exist
+  
+  - name: chmod +x /home/ubuntu/project/start-minikube.sh
+    command: dest=/home/ubuntu/project/start-minikube.sh mode=a+x
+
+  - name: Start minbikube
+    make:
+     target: start
+     chdir: /home/ubuntu/project/
+
+
 
 
   - name: make service
@@ -81,4 +99,3 @@
   - name: make pod
     command: kubectl apply -f /home/ubuntu/project/kube/client-pod.yaml
     become: true
-    
