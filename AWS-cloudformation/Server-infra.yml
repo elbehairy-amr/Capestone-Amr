@@ -74,6 +74,7 @@ Resources:
           apt install ansible -y
           apt install python3-pip -y
           apt install python -y
+          apt install python3 -y
           apt install python-apt -y
           apt-get install docker.io -y
           systemctl enable docker
