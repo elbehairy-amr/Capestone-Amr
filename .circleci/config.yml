@@ -47,7 +47,7 @@ jobs:
 
 # Build and Push Docker imaage 
 
-  Build and Push image:
+  Build-And-Push-Image:
     executor: docker/machine
     steps:
       - checkout
@@ -144,6 +144,7 @@ workflows:
     jobs:
       - Install
       - Lint
+      - Build-And-Push-Image
       - DeployInfra-VPC:
           requires: [Lint] 
       - DeployInfra-Server:
