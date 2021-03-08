@@ -47,7 +47,7 @@
         - apt-transport-https
         - ca-certificates
         - curl
-        - gnup
+        - gnupg
         update_cache: yes
     - name: " Download Docker files"
       become: yes
