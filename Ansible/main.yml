@@ -79,8 +79,8 @@
 
     - name: Install kubectl
       script:
-      cmd: kubectl.sh
-      chdir: /home/ubuntu/root/project/Ansible/
+        cmd: kubectl.sh
+        chdir: /home/ubuntu/root/project/Ansible/
 
     - name: Make the kubectl binary executable
       file: dest=/home/ubuntu/root/project/Ansible/kubectl mode=a+x
@@ -96,8 +96,8 @@
 
     - name: Install minikube
       script:
-      cmd: minikube.sh
-      chdir: /home/ubuntu/root/project/Ansible
+        cmd: minikube.sh
+        chdir: /home/ubuntu/root/project/Ansible
 
     - name: chmod +x minikube
       file: dest=/home/ubuntu/root/project/Ansible/minikube  mode=a+x
