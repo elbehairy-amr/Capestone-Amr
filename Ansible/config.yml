@@ -4,7 +4,7 @@
   gather_facts: false
   become: yes
 
-
+#
   vars:
     - ansible_python_interpreter: /usr/bin/python3
     - ansible_host_key_checking: false
@@ -16,7 +16,7 @@
     copy:
       src: /root/pack.tar.gz
       dest: /home/
-      force : yes
+    force : yes
 
 # Extract 
   - name:  Extract
