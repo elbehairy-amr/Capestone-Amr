@@ -18,7 +18,7 @@
       copy:
         src: /root/pack.tar.gz
         dest: /home/
-      force: yes
+        force: yes
 
     - name: Extract
       unarchive:
