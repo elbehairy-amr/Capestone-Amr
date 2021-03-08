@@ -6,16 +6,16 @@
   become: yes
 
   tasks:
-    - name: "Copy files to EC2 instance"
-      copy:
-        src: /root/pack.tar.gz
-        dest: /home/
-      force: yes
+    # - name: "Copy files to EC2 instance"
+    #   copy:
+    #     src: /root/pack.tar.gz
+    #     dest: /home/
+    #   force: yes
 
-    - name: Extract
-      unarchive:
-        src: /home/pack.tar.gz
-        dest: /home/ubuntu
+    # - name: Extract
+    #   unarchive:
+    #     src: /home/pack.tar.gz
+    #     dest: /home/ubuntu
     - name: "Remove old Docker"
       become: yes
       apt:
