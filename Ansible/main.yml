@@ -19,11 +19,16 @@
         src: /root/pack.tar.gz
         dest: /home/
         force: yes
+        
+       
+        
 
     - name: Extract
       unarchive:
         src: /home/pack.tar.gz
         dest: /home/ubuntu
+        remote_src: yes
+      
     - name: "Remove old Docker"
       become: yes
       apt:
