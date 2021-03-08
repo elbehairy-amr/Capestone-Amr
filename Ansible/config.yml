@@ -1,142 +1,137 @@
+---
 - name: "Configuration Play"
   hosts: web
   user: ubuntu
   gather_facts: false
   become: yes
 
-#
-  vars:
-    - ansible_python_interpreter: /usr/bin/python3
-    - ansible_host_key_checking: false
-    - ansible_stdout_callback: yaml
-  tasks:
 
-# Copy Project Files 
-  - name: "Copy files to EC2 instance"
-    copy:
+  tasks:
+   - name: "Copy files to EC2 instance"
+     copy:
       src: /root/pack.tar.gz
       dest: /home/
-    force : yes
+     force : yes
 
-# Extract 
-  - name:  Extract
-    unarchive:
-      src: /home/pack.tar.gz
-      dest: /home/ubuntu
-    remote_src: yes
-
-
-# Install Docker 
-
-  - name: "Remove old Docker"
-    become: yes
-    apt:
-      pkg:
-      - docker
-      - docker-engine
-      - docker.io
-      - containerd
-      - runc
-    update_cache: yes
-    state: absent
-
-  - name: "Install Dep"
-    become: yes
-    apt:
-      pkg:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg
-    update_cache: yes
-
-  - name: "Download Docker files"
-    become: yes
-    shell: |
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-      echo   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null 
-
-  - name: "Install Docker"
-    become: yes
-    apt:
-      pkg:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-    update_cache: yes
-
-  - name: "Fix docker non-root privileges"
-    become: yes
-    shell: |
-      usermod -aG docker ubuntu
-           
-
-# Install  MiniKube and kubectl 
-  - name: make minikube.sh executable
-    file: dest=/home/ubuntu/root/project/Ansible/minikube.sh mode=a+x
+    # Extract 
+    - name:  Extract
+      unarchive:
+       src: /home/pack.tar.gz
+       dest: /home/ubuntu
+      
 
 
-  - name: make kubectl.sh executable
-    file: dest=/home/ubuntu/root/project/Ansible/kubectl.sh mode=a+x
+    # Install Docker 
+
+    - name: "Remove old Docker"
+      become: yes
+      apt:
+       pkg:
+        - docker
+        - docker-engine
+        - docker.io
+        - containerd
+        - runc
+      update_cache: yes
+      state: absent
+
+    - name: "Install Dep"
+      become: yes
+      apt:
+       pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+      update_cache: yes
+
+    - name: "Download Docker files"
+      become: yes
+      shell: |
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+          $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null 
+
+    - name: "Install Docker"
+      become: yes
+      apt:
+       pkg:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      update_cache: yes
+
+    - name: "Fix docker non-root privileges"
+      become: yes
+      shell: |
+        usermod -aG docker ubuntu
+            
+
+    # Install  MiniKube and kubectl 
+    - name: make minikube.sh executable
+      file: dest=/home/ubuntu/root/project/Ansible/minikube.sh mode=a+x
 
 
-
-  - name: Install kubectl
-    script:
-     cmd: kubectl.sh
-     chdir: /home/ubuntu/root/project/Ansible/
-
-  - name: Make the kubectl binary executable
-    file: dest=/home/ubuntu/root/project/Ansible/kubectl mode=a+x
-
-  - name: mv /home/ubuntu/root/project/Ansible/kubectl /usr/local/bin/kubectl
-    stat: path=/home/ubuntu/root/project/Ansible/kubectl
-    register: kubectl
-
-  - name:
-    command: mv /home/ubuntu/root/project/Ansible/kubectl /usr/local/bin/kubectl
-    when: kubectl.stat.exists
-
-  
-  - name: Install minikube
-    script:
-     cmd: minikube.sh
-     chdir: /home/ubuntu/root/project/Ansible
-
-  - name: chmod +x minikube
-    file: dest=/home/ubuntu/root/project/Ansible/minikube  mode=a+x
-
-  - name:  mv /home/ubuntu/root/project/Ansible/minikube /usr/local/bin/
-    stat: path=/home/ubuntu/root/project/Ansible/minikube
-    register: minikube
-
-  - name:
-    command: mv /home/ubuntu/root/project/Ansible/minikube /usr/local/bin/
-    when: minikube.stat.exists
-
-  - name: chmod +x /home/ubuntu/root/project/start-minikube.sh
-    command: chmod +x /home/ubuntu/root/project/start-minikube.sh
-
-
- # Start MiniKube Manually 
-
-  - name: Start minbikube
-    make:
-     target: start
-     chdir: /home/ubuntu/root/project/
-    
+    - name: make kubectl.sh executable
+      file: dest=/home/ubuntu/root/project/Ansible/kubectl.sh mode=a+x
 
 
 
+    - name: Install kubectl
+      script:
+      cmd: kubectl.sh
+      chdir: /home/ubuntu/root/project/Ansible/
 
-  - name: make service
-    make:
-      target: deploy-service
-      chdir: /home/ubuntu/root/project/
+    - name: Make the kubectl binary executable
+      file: dest=/home/ubuntu/root/project/Ansible/kubectl mode=a+x
+
+    - name: mv /home/ubuntu/root/project/Ansible/kubectl /usr/local/bin/kubectl
+      stat: path=/home/ubuntu/root/project/Ansible/kubectl
+      register: kubectl
+
+    - name:
+      command: mv /home/ubuntu/root/project/Ansible/kubectl /usr/local/bin/kubectl
+      when: kubectl.stat.exists
 
 
-  - name: make pod
-    make:
-      target: deploy
-      chdir: /home/ubuntu/root/project/
+    - name: Install minikube
+      script:
+      cmd: minikube.sh
+      chdir: /home/ubuntu/root/project/Ansible
+
+    - name: chmod +x minikube
+      file: dest=/home/ubuntu/root/project/Ansible/minikube  mode=a+x
+
+    - name:  mv /home/ubuntu/root/project/Ansible/minikube /usr/local/bin/
+      stat: path=/home/ubuntu/root/project/Ansible/minikube
+      register: minikube
+
+    - name:
+      command: mv /home/ubuntu/root/project/Ansible/minikube /usr/local/bin/
+      when: minikube.stat.exists
+
+    - name: chmod +x /home/ubuntu/root/project/start-minikube.sh
+      command: chmod +x /home/ubuntu/root/project/start-minikube.sh
+
+
+    # Start MiniKube Manually 
+
+ #   - name: Start minbikube
+ #     make:
+ #     target: start
+ #     chdir: /home/ubuntu/root/project/
+      
+
+
+
+
+#    - name: make service
+#      make:
+#        target: deploy-service
+#        chdir: /home/ubuntu/root/project/
+
+
+#    - name: make pod
+#      make:
+#        target: deploy
+#        chdir: /home/ubuntu/root/project/
