@@ -21,9 +21,9 @@
 # Extract 
   - name:  Extract
     unarchive:
-     src: /home/pack.tar.gz
-     dest: /home/ubuntu
-     remote_src: yes
+      src: /home/pack.tar.gz
+      dest: /home/ubuntu
+    remote_src: yes
 
 
 # Install Docker 
