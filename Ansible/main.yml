@@ -1,0 +1,64 @@
+---
+- name: "Configuration Play"
+  hosts: web
+  user: ubuntu
+  gather_facts: false
+  become: yes
+
+  tasks:
+    - name: "Copy files to EC2 instance"
+      copy:
+        src: /root/pack.tar.gz
+        dest: /home/
+      force: yes
+
+    - name: Extract
+      unarchive:
+        src: /home/pack.tar.gz
+        dest: /home/ubuntu
+    - name: "Remove old Docker"
+      become: yes
+      apt:
+        pkg:
+        - docker
+        - docker-engine
+        - docker.io
+        - containerd
+        - runc
+      update_cache: yes 
+      state: absent
+    - name: "install dep"
+      become: yes
+      apt:
+        pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnup
+      update_cache: yes
+    - name: " Download Docker files"
+      become: yes
+      shell: |
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+          $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null 
+    - name: " Install Docker files"
+      become: yes 
+      apt:
+        pkg:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      update_cache: yes
+    - name: "Fix docker non-root privileges"
+      become: yes
+      command: usermod -aG docker ubuntu
+
+
+
+
+
+
+
+
+   

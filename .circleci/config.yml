@@ -137,7 +137,7 @@ jobs:
           command: |
             cd ../
             tar -czvf /root/pack.tar.gz --absolute-names /root/project/
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /root/project/Ansible/inventory.txt /root/project/Ansible/config.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /root/project/Ansible/inventory.txt /root/project/Ansible/main.yml
       
 workflows:
   default:
