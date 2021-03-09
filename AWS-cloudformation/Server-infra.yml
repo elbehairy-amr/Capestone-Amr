@@ -70,7 +70,7 @@ Resources:
           apt install python3-pip -y
           apt install python3 -y
           
-      ImageId: ami-07b4f3c02c7f83d59
+      ImageId: ami-07dd19a7900a1f049
       KeyName: aws-key
       SecurityGroups:
        - Ref: WebServerSecGroup

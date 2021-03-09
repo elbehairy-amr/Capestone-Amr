@@ -168,9 +168,9 @@ jobs:
 workflows:
   default:
     jobs:
+      - Build-And-Push-Image
       - Install
       - Lint
-      - Build-And-Push-Image
       - DeployInfra-VPC:
           requires: [Lint] 
       - DeployInfra-Server:

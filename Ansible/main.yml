@@ -40,21 +40,24 @@
         - runc
         update_cache: yes 
         state: absent
-    - name: "install dep"
+    
+    - name: "install dependencies"
       become: yes
       apt:
         pkg:
-        - apt-transport-https
         - ca-certificates
         - curl
         - gnupg
+        - apt-transport-https
         update_cache: yes
-    - name: " Download Docker"
+    -
+     name: " Download Docker"
       become: yes
       shell: |
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
         echo   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-          $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null 
+          $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    
     - name: " Install Docker files"
       become: yes 
       apt:
