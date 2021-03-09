@@ -8,6 +8,9 @@ GitHub URL: https://github.com/elbehairy-amr/Capestone-Amr
 # PipeLine stages,
 
 The Pipe will build docker image and push it to docker up , Deploy AWS Infra  using cloudformation , install docker and minikube and create Pods using Ansible.
+
+Stages:
+
 Test installing packages. 
 
 Lint. 

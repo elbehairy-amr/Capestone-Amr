@@ -39,7 +39,7 @@ jobs:
       - run:
           name : Hadolint 
           command: | 
-            hadolint Dockerfile --ignore DL3008 --ignore DL3016
+            hadolint Dockerfile 
 
 # build image 
 
