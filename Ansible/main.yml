@@ -49,7 +49,7 @@
         - curl
         - gnupg
         update_cache: yes
-    - name: " Download Docker files"
+    - name: " Download Docker"
       become: yes
       shell: |
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -63,7 +63,7 @@
         - docker-ce-cli
         - containerd.io
         update_cache: yes
-    - name: "Fix docker non-root privileges"
+    - name: "Fix docker Permissions"
       become: yes
       command: usermod -aG docker ubuntu
 

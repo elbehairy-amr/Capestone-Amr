@@ -67,25 +67,8 @@ Resources:
           #!/bin/bash
           apt-get update -y
           apt-get upgrade -y
-          apt-get install -y conntrack
-          apt-get install unzip awscli -y 
-          apt install software-properties-common -y
-          apt-add-repository --yes --update ppa:ansible/ansible
-          apt install ansible -y
           apt install python3-pip -y
-          apt install python -y
           apt install python3 -y
-          apt install python-apt -y
-          
-          
-          
-          apt-get install -y aptitude
-
-
-          
-
-
-
           
       ImageId: ami-07b4f3c02c7f83d59
       KeyName: aws-key
@@ -95,7 +78,7 @@ Resources:
       BlockDeviceMappings:
        - DeviceName: "/dev/sdk"
          Ebs:
-           VolumeSize: '20'
+           VolumeSize: '25'
            
   
   WebAppGroup:
