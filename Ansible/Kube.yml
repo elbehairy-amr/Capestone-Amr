@@ -39,15 +39,17 @@
       shell: install minikube-linux-amd64 /usr/local/bin/minikube
 
     - name: "Start Minikube"
-      shell: minikube start --driver=non 
+      shell: minikube start --driver=none 
+
+    - name: Start pod
+      make:
+        target: deploy-pod
+        chdir: /home/ubuntu/root/project/
+    - name:
+      make: 
+        target: expose
+        chdir: /home/ubuntu/root/project/
+
     
 
    
-
-
-   ## Start MiniKube Manually 
-
-    - name: Start MiniKube
-      make:
-        target: start
-        chdir: /home/ubuntu/root/project/
