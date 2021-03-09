@@ -113,7 +113,7 @@ jobs:
             - IP.txt
 # Configure Infra-Structure using Ansible.  
   
-  Configure-Infrastructure:
+  Configure-Docker:
     docker :
       - image : "python:3.7-alpine3.11"
     steps:
@@ -138,6 +138,32 @@ jobs:
             cd ../
             tar -czvf /root/pack.tar.gz --absolute-names /root/project/
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /root/project/Ansible/inventory.txt /root/project/Ansible/main.yml
+  
+  Configure-Kube:
+    docker :
+      - image : "python:3.7-alpine3.11"
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["0d:b8:af:b5:63:a3:73:2e:ce:48:06:c7:c5:63:e9:66"]
+      - attach_workspace:
+          at: Ansible
+
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+            apk add --update tar
+            apk add --update gzip
+            apk add --update curl
+            apk add --update openssh-client 
+      
+      - run:
+          name : configure server 
+          command: |
+            cd ../
+            tar -czvf /root/pack.tar.gz --absolute-names /root/project/
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /root/project/Ansible/inventory.txt /root/project/Ansible/config.yml          
       
 workflows:
   default:
@@ -149,8 +175,11 @@ workflows:
           requires: [Lint] 
       - DeployInfra-Server:
           requires: [DeployInfra-VPC] 
-      - Configure-Infrastructure:
-          requires: [DeployInfra-Server]          
+      - Configure-Docker:
+          requires: [DeployInfra-Server] 
+      - Configure-Kube:
+           requires: [Configure-Docker] 
+
       
                 
             
